@@ -1,0 +1,499 @@
+@import "fonts"
+@import "libs"
+@import "vars"
+//===================================================================================
+body input:focus:required:invalid,
+body textarea:focus:required:invalid
+	//color: red
+
+body input:required:valid,
+body textarea:required:valid
+	//color: green
+
+.hidden
+	display: none
+
+//===================================================================================
+.img_responsive
+	display: block
+	max-width: 100%
+	height: auto
+
+//===================================================================================
+.h1, .h2, .h3, .h4, .h5, .h6
+	line-height: 1.4
+	text-transform: uppercase
+
+//===================================================================================
+.text_center
+	text-align: center
+
+
+//	PRELOADER ===============================================================================================================
+@mixin opacity($opacity)
+	opacity: $opacity / 100
+	filter: alpha(opacity=$opacity)
+
+.preloader
+	position: fixed
+	top: 0
+	bottom: 0
+	left: 0
+	right: 0
+	z-index: 9999
+	background-color: $background
+	.preloader_circle
+		position: relative
+		left: 50%
+		top: 50vh
+		margin:
+			left: -40px
+			top: -40px
+		&::before, &::after
+			content: ''
+			border: 5px solid #323232
+			width: 80px
+			height: 80px
+			border-radius: 500px
+			position: absolute
+		&::before
+			animation: preloader_circle_outer .8s ease-in infinite
+		&::after
+			animation: preloader_circle_inner .8s linear infinite
+// АНИМАЦИЯ ДЛЯ PRELOADER-а ===================================================================================
+@keyframes preloader_circle_outer
+	0%
+		@include opacity(100)
+	50%
+		@include opacity(50)
+	100%
+		@include opacity(0)
+
+@keyframes preloader_circle_inner
+	0%
+		@include opacity(0)
+		transform: scale(0)
+	100%
+		@include opacity(100)
+		transform: scale(1)
+
+//===================================================================================
+html, body
+	height: 100%
+//||||||||||||||||||||||||||||||||| ГЛАВНАЯ |||||||||||||||||||||||||||||||||
+body
+	font-size: 14px
+	min-width: 320px
+	position: relative
+	line-height: 1.7
+	font-family: $default-font
+	overflow-x: hidden
+	background-color: $background
+	opacity: 1
+	.left_side
+		background-color: #111
+		position: fixed
+		left: 0
+		top: 0
+		width: 50px
+		height: 100%
+		z-index: 10
+		color: #FFF
+		overflow-x: hidden
+		outline: none
+		transition: all .5s
+		&.active
+			width: 300px
+			.btn_mnu
+				background-color: transparent
+			.user_info
+				opacity: 1
+			.aside_content
+				li
+					a::before
+						margin-left: -32px
+				li:hover
+					a
+						text-indent: 5px
+				nav
+					margin-top: 35px
+			& + .content
+				left: 250px
+				transition: all .5s
+				transition-delay: .5s
+
+//	КНОПКА МЕНЮ ===================================================================================
+.btn_mnu
+	width: 50px
+	height: 50px
+	display: flex
+	flex-direction: column
+	align-items: center
+	justify-content: center
+	background-color: tomato
+	cursor: pointer
+	position: relative
+	float: right
+	transition: all .5s
+
+.btn_row
+	height: 2px 
+	width: 60%
+	margin: 2px 0
+	background-color: #fff
+	position: relative
+	transition: all .5s
+
+.btn_mnu.active .btn_row:first-child
+	transform: rotate(-135deg)
+	top: 6px
+
+.btn_mnu.active .btn_row:last-child
+	transform: rotate(-225deg)
+	top: -6px
+
+.btn_mnu.active .btn_row:nth-child(2)
+	opacity: 0
+
+//	СОДЕРЖИМОЕ МЕНЮ ===================================================================================
+.aside_content
+	position: absolute
+	top: 50px
+	width: 100%
+	padding: 25px 0
+	color: #FFF
+	white-space: nowrap
+	transition: all .5s
+	.user_info // ШАПКА МЕНЮ (фото, имя)
+		text-align: center
+		letter-spacing: 1px
+		opacity: 0
+		transition: all .2s
+		img
+			width: 120px
+			height: 120px
+			border-radius: 50%
+		h2
+			font-size: 16px
+		p
+			font-size: 12px
+			color: $gray
+	nav // МЕНЮ
+		margin: -110px 0px 35px 0px
+		transition: all .5s
+		position: relative
+		z-index: 5
+		ul, li 	// ПУНКТЫ МЕНЮ
+			margin: 0
+			padding: 0
+			list-style-type: none 
+		li
+			a // ПУНКТЫ МЕНЮ - НАЗВАНИЯ
+				color: #B2B2B2
+				display: block
+				padding: 10px 0px 10px 70px
+				border-bottom: 1px solid #212121
+				background-color: #111
+				transition: all .5s
+				&:first-child
+					border-top: 1px solid #212121
+				&:hover
+					text-decoration: none
+					background-color: tomato
+					color: #FFF
+			a::before 	// ИКОНКИ
+				font-family: "linea-basic"
+				font-size: 26px
+				line-height: 0
+				margin-left: -58px
+				margin-right: 13px
+				margin-top: -4px
+				display: inline-block
+				vertical-align: middle
+				transition: all .5s
+			&:nth-child(1) a::before
+				content: 'u'
+			&:nth-child(2) a::before
+				content: '{'
+			&:nth-child(3) a::before
+				font-family: "linea-ecommerce"
+				content: '-'
+			&:nth-child(4) a::before
+				content: ''
+
+//===================================================================================
+.content
+	position: relative
+	margin: 5px 8px 55px 55px
+	left: 0
+	transition: all .5s
+
+.gallery
+	a
+		overflow: hidden
+		width: 320px
+		display: block
+		min-height: 50px
+	img
+		display: block
+		max-width: 100%
+		transition: all 17s
+		&:hover
+			transform: scale(5)
+
+// ФИЛЬТР ИЗОБРАЖЕНИЙ =================================================================
+.filter_items
+	position: fixed
+	bottom: 0
+	right: 0
+	text-align: right
+	color: #FFF
+	width: 100%
+	padding: 10px 10px 0 55px
+	background-color: $background
+	.filter_label
+		background-color: transparent
+		border-color: #FFF
+		transition: all .5s
+		padding: 5px 15px
+		opacity: .4
+		margin: 0 3px 15px
+		font-size: 12px
+		letter-spacing: 3px
+		border: 1px #FFF solid
+		&:hover, &.active
+			background-color: tomato
+			opacity: 1
+			border-color: tomato
+
+
+// Magnific-Popup =================================================================
+.mfp-container
+	padding: 0
+	background-color: $background
+	.mfp-content
+			width: 100%
+			.mfp-figure
+				background-color: $background
+				button.mfp-close
+					cursor: pointer
+					background-color: tomato
+					width: 50px
+					height: 50px
+					position: fixed
+					text-align: center
+					right: 20px
+					padding: 0
+
+img.mfp-img
+	display: block
+	height: auto
+	max-height: none !important
+	padding: 0
+	max-width: 100%
+
+
+// АНИМАЦИЯ Magnific-Popup =================================================================
+/* magnific library opened */
+.mfp-zoom-out-cur .gallery
+
+.mfp-zoom-out-cur .gallery
+	left: -100%
+
+/* overlay at start */
+.mfp-fade.mfp-bg
+	opacity: 1
+
+/* overlay animate in */
+.mfp-fade.mfp-bg.mfp-ready
+	opacity: 1
+
+/* overlay animate out */
+.mfp-fade.mfp-bg.mfp-removing
+	opacity: 1
+
+/* content at start */
+.mfp-fade.mfp-wrap .mfp-content
+	left: 100%
+	transition: all 1s
+
+/* content animate it */
+.mfp-fade.mfp-wrap.mfp-ready .mfp-content
+	left: 0
+
+/* content animate out */
+.mfp-fade.mfp-wrap.mfp-removing .mfp-content
+	left: 100%
+
+
+// =========================================================================================
+//||||||||||||||||||||||||||||||||| ОБО МНЕ |||||||||||||||||||||||||||||||||
+.inside
+	background-color: #FAFAFA
+	.content
+		padding: 45px 10% 45px
+		.content_header
+			text-align: center
+			img
+				width: 220px
+				height: 220px
+				border-radius: 50%
+				margin-bottom: 35px
+			p
+				letter-spacing: 3px
+		.content_body
+			margin-top: 35px
+			font-size: 18px
+
+// =========================================================================================
+//||||||||||||||||||||||||||||||||| КОНТАКТЫ |||||||||||||||||||||||||||||||||
+.contacts_list
+	margin: 0
+	padding: 0
+	padding-top: 15px
+	list-style-type: none
+	.phone
+		word-wrap: no-wrap
+	li
+		margin-bottom: 40px
+		h3
+			font-size: 22px
+			margin-bottom: 5px
+			line-height: 1.6
+			i
+				text-align: center
+				font-size: 32px
+				width: 55px
+				margin-left: -12px
+				.fa
+					display: inline-block
+					width: 100%
+			.fa-pencil:before
+				font-size: 24px
+			.fa-user
+				font-size: 30px
+		p
+			font-size: 20px
+			letter-spacing: 1px
+			line-height: 2.5
+			color: tomato
+			i
+				font-size: 34px
+			.fa-telegram
+				font-size: 32px
+			a
+				display: inline-block
+				font-size: 34px
+				height: 34px
+				width: 34px
+				text-align: center
+				margin: 10px 15px 10px 10px
+				line-height: 34px
+				transition: all .3s ease
+				&:hover
+					color: $background
+
+.content_body
+	font-size: 16px
+	a
+		color: tomato
+		text-decoration: underline
+
+.row
+	margin-right: -15px
+	margin-left: -15px
+
+.form_contacts
+	margin-top: 60px
+	padding: 0
+	.callback
+		background-color: $background
+		color: #FFF
+		padding: 30px
+		h3
+			font-size: 22px
+			font-weight: normal
+			margin-top: 0
+			margin-bottom: 25px
+			text-align: center
+		label
+			font-size: 13px
+			letter-spacing: 3px
+			color: #5a5a5a
+			width: 100%
+			margin-bottom: 15px
+			input, textarea
+				display: block
+				width: 100%
+				border: 1px solid #484848
+				background-color: #2e2e2e
+				color: #FFF
+				padding: 10px 10px
+				margin-top: 5px
+				font-size: 15px
+				max-width: 100%
+				letter-spacing: 1px
+				font-weight: normal
+
+.button
+	display: block
+	border: none
+	outline: none
+	background-color: tomato
+	padding: 15px 35px
+	text-align: center
+	position: relative
+	text-decoration: none
+	font-size: 13px
+	text-transform: uppercase
+	letter-spacing: 3px
+	border-radius: 2px
+	font-weight: 600
+	transition: background-color .1s ease
+	margin: 20px auto 10px
+	&::after
+		transition: background-color .2s ease
+		position: absolute
+		content: ''
+		height: 4px
+		bottom: 0
+		width: 100%
+		background-color: darken(tomato, 50%)
+		opacity: .18
+		border-bottom-left-radius: 2px
+		border-bottom-right-radius: 2px
+		left: 0
+	&:focus, &:hover
+		text-decoration: none
+		color: #FFF
+	&:hover
+		background-color: lighten(tomato, 5%)
+		&::after
+			opacity: .22
+	&:active
+		background-color: darken(tomato, 5%)
+		&::after
+			opacity: .32
+
+.success // "Спасибо за заявку!"
+	display: none
+	position: absolute
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0
+	text-transform: uppercase
+	font-weight: bold
+	z-index: 10
+	span
+		margin: auto
+	& ~ *
+		transition: all 0.5s ease
+	&.active
+		& ~ *
+			opacity: .5
+			filter: blur(10px)
+
+//===================================================================================
+@import "media" // Всегда в конце
+//===================================================================================

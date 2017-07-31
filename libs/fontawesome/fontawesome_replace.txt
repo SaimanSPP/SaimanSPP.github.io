@@ -1,0 +1,3 @@
+Необходимо в файле font-awesome.min.css поменять пути:
+[src:url('../fonts/fontawesome/fontawesome-webfont...]
+на актуальные пути для текущего проекта.
